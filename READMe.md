@@ -288,6 +288,10 @@ The `Main` class contains several test cases demonstrating different aspects of 
 4. Error handling for empty cart
 5. Example from requirements
 
+output example:
+
+![image](https://github.com/user-attachments/assets/c54ef066-acdf-4f63-b76f-e28ba8940577)
+
 To run the demo:
 ```
 java Main
