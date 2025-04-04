@@ -10,14 +10,6 @@ The e-commerce system allows users to:
 - Handle shipping for physical products
 - Print receipts for purchases
 
-## Architecture
-
-The system is designed using several core design patterns:
-- **Factory Pattern**: For creating shippable items
-- **Strategy Pattern**: For payment processing and shipping services 
-- **Template Method Pattern**: Using abstract classes to define algorithms with steps that can be redefined by subclasses
-- **Composition over Inheritance**: Using interfaces to define behaviors
-
 ## Class Diagram
 
 ```mermaid
