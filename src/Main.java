@@ -28,7 +28,7 @@ public class Main {
     }
 
 
-    private static void driverCode(){
+    private static void driverCode() {
 
         WeightFormatter weightFormatter = new WeightFormaterImpl();
         ShippingService shippingService = new ShippingServiceImpl(weightFormatter);
@@ -59,8 +59,8 @@ public class Main {
         System.out.println("\n=== Test Case 1: Successful Checkout ===");
         Cart cart1 = new ShoppingCart();
         cart1.add(cheese, 2);
-//        cart1.add(tv, 1);
-//        cart1.add(scratchCard, 1);
+        cart1.add(tv, 1);
+        cart1.add(scratchCard, 1);
         cart1.add(biscuits, 1);
 
         try {
@@ -68,5 +68,43 @@ public class Main {
         } catch (CheckoutException e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        // Test case 2: Expired product
+        System.out.println("\n=== Test Case 2: Expired Product ===");
+        PerishableProduct expiredCheese = new PerishableProduct("Expired Cheese", 100, 5,
+                LocalDate.now().minusDays(1), 0.2, true);
+
+        Cart cart2 = new ShoppingCart();
+        cart2.add(expiredCheese, 1);
+
+        try {
+            checkoutService.checkout(customer, cart2);
+        } catch (CheckoutException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Test case 3: Insufficient balance
+        System.out.println("\n=== Test Case 3: Insufficient Balance ===");
+        Customer poorCustomer = new Customer( 100);
+        Cart cart3 = new ShoppingCart();
+        cart3.add(tv, 1);
+
+        try {
+            checkoutService.checkout(poorCustomer, cart3);
+        } catch (CheckoutException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Test case 4: Empty cart
+        System.out.println("\n=== Test Case 4: Empty Cart ===");
+        Cart cart4 = new ShoppingCart();
+
+        try {
+            checkoutService.checkout(customer, cart4);
+        } catch (CheckoutException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
     }
+
 }
