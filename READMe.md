@@ -286,9 +286,5 @@ The `Main` class contains several test cases demonstrating different aspects of 
 2. Error handling for expired products
 3. Error handling for insufficient customer balance
 4. Error handling for empty cart
-5. Example from requirements
 
-To run the demo:
-```
-java Main
-```
+
