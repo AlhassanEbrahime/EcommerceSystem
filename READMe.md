@@ -287,7 +287,8 @@ The `Main` class contains several test cases demonstrating different aspects of 
 3. Error handling for insufficient customer balance
 4. Error handling for empty cart
 
-output:
+### output:
+
 ![image](https://github.com/user-attachments/assets/fcdc371a-e1ca-4463-a34b-92bae395375e)
 
 
