@@ -199,74 +199,6 @@ classDiagram
     ShippableItemFactory --> Shippable
 ```
 
-## Component Diagram
-
-```mermaid
-flowchart TD
-    subgraph Products
-        Product[Product Interface]
-        AbstractProduct[AbstractProduct]
-        PerishableProduct[PerishableProduct]
-        NonPerishableProduct[NonPerishableProduct]
-        Weightable[Weightable Interface]
-    end
-    
-    subgraph ShoppingCart
-        Cart[Cart Interface]
-        ShoppingCart[ShoppingCart]
-        CartItem[CartItem]
-    end
-    
-    subgraph Checkout
-        CheckoutService[CheckoutService]
-        PaymentProcessor[PaymentProcessor Interface]
-        SimplePaymentProcessor[SimplePaymentProcessor]
-        Customer[Customer]
-    end
-    
-    subgraph Shipping
-        ShippingService[ShippingService Interface]
-        StandardShippingService[StandardShippingService]
-        Shippable[Shippable Interface]
-        ShippableItem[ShippableItem]
-        ShippableItemFactory[ShippableItemFactory]
-        WeightFormatter[WeightFormatter Interface]
-        StandardWeightFormatter[StandardWeightFormatter]
-    end
-    
-    subgraph Receipt
-        ReceiptPrinter[ReceiptPrinter Interface]
-        ConsoleReceiptPrinter[ConsoleReceiptPrinter]
-    end
-    
-    %% Relationships
-    Product --> AbstractProduct
-    AbstractProduct --> PerishableProduct
-    AbstractProduct --> NonPerishableProduct
-    PerishableProduct --> Weightable
-    NonPerishableProduct --> Weightable
-    
-    Cart --> ShoppingCart
-    ShoppingCart --> CartItem
-    CartItem --> Product
-    
-    CheckoutService --> Cart
-    CheckoutService --> ShippingService
-    CheckoutService --> PaymentProcessor
-    CheckoutService --> ReceiptPrinter
-    CheckoutService --> ShippableItemFactory
-    PaymentProcessor --> SimplePaymentProcessor
-    SimplePaymentProcessor --> Customer
-    
-    ShippingService --> StandardShippingService
-    StandardShippingService --> WeightFormatter
-    StandardShippingService --> Shippable
-    WeightFormatter --> StandardWeightFormatter
-    ShippableItemFactory --> Shippable
-    ShippableItemFactory --> ShippableItem
-    
-    ReceiptPrinter --> ConsoleReceiptPrinter
-```
 
 ## Key Components
 
@@ -346,43 +278,6 @@ The system uses specific exceptions to handle various error cases:
 4. **Interface Segregation Principle**: Clients aren't forced to depend on interfaces they don't use
 5. **Dependency Inversion Principle**: High-level modules depend on abstractions
 
-## Sequence Diagram: Checkout Process
-
-```mermaid
-sequenceDiagram
-    participant Client
-    participant CheckoutService
-    participant Cart
-    participant ShippableItemFactory
-    participant ShippingService
-    participant PaymentProcessor
-    participant Customer
-    participant ReceiptPrinter
-    
-    Client->>CheckoutService: checkout(customer, cart)
-    CheckoutService->>Cart: validateCheckout(cart)
-    CheckoutService->>Cart: getItems()
-    CheckoutService->>Cart: getSubtotal()
-    
-    CheckoutService->>ShippableItemFactory: createFromCartItems(items)
-    ShippableItemFactory-->>CheckoutService: shippableItems
-    
-    CheckoutService->>ShippingService: calculateShippingCost(shippableItems)
-    ShippingService-->>CheckoutService: shippingCost
-    
-    CheckoutService->>PaymentProcessor: processPayment(customer, totalAmount)
-    PaymentProcessor->>Customer: deductBalance(amount)
-    Customer-->>PaymentProcessor: success
-    PaymentProcessor-->>CheckoutService: success
-    
-    CheckoutService->>ShippingService: processShipment(shippableItems)
-    
-    CheckoutService->>ReceiptPrinter: printReceipt(items, subtotal, shippingCost, totalAmount, remainingBalance)
-    
-    CheckoutService->>CheckoutService: updateProductQuantities(items)
-    CheckoutService->>Cart: clear()
-    CheckoutService-->>Client: success
-```
 
 ## Running the Demo
 
